@@ -3,14 +3,15 @@ export const AddToAction = (todo) => (dispatch, getState) => {
     Todo: { todos },
   } = getState();
 
-  const hasTodo = todos.find((i) => i.todo === todo);
+  const hasTodo = todos.find((i) => i == todo);
 
   if (!hasTodo && todo !== "") {
     dispatch({
       type: "ADD_TODO",
-      payload: [{ id: todo, todo }, ...todos],
+      payload: [todo , ...todos],
     });
   }
+
 };
 
 export const RemoveTodoAction = (todo) => (dispatch, getState) => {
@@ -18,11 +19,11 @@ export const RemoveTodoAction = (todo) => (dispatch, getState) => {
     Todo: { todos },
   } = getState();
 
-  const hasTodo = todos.find((i) => i.todo === todo);
+  const hasTodo = todos.find((i) => i == todo);
   if (!hasTodo && todo !== "") {
     dispatch({
       type: "REMOVE_TODO",
-      payload: todos.filter((t) => t.id !== todo.id),
+      payload: todos.filter((t) => t!== todo),
     });
   }
 };

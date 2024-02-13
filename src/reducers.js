@@ -1,11 +1,11 @@
 const TodoReducer = (state={todos:[]},action)=>{
     switch(action.type){
-        case "Add_todo": 
+        case "ADD_TODO": 
             return {todos:action.payload};
-        case "Remove_todo":
+        case "REMOVE_TODO":
             return {todos:action.payload};
         default: 
-            break;
+        return state
     }
 }
 

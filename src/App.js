@@ -13,15 +13,16 @@ function App() {
   const {todos}=Todo;
 
 const handleSubmit=(e)=>{
- e.preventDefault();
+ e.preventDefault(e);
+ console.log("67")
  dispatch(AddToAction(todo))
 }
 
 const removeHandler=(e)=>{
-  e.preventDefault();
+  console.log("76",e)
   dispatch(RemoveTodoAction(e))
 }
-
+console.log(todos)
 
   return (
     <div className="app">
@@ -35,10 +36,10 @@ const removeHandler=(e)=>{
     </form>
     <ul>
       {todos?.map((item,index)=>{
-      <li key={item?.id+"listing"}>
-      <span>{item}</span>
-        <button onChange={(e)=>removeHandler(item)}>Delete</button>
-      </li>
+     return( <li key={index+"listing"}>
+      <span><h5>{item}</h5></span>
+        <button style={{background:"black", color:"white"}} onClick={()=>removeHandler(item)}>Delete</button>
+      </li>)
       })}
     </ul>  
     </div>

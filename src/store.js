@@ -1,10 +1,9 @@
 import {createStore, combineReducers, applyMiddleware} from "redux";
 import {thunk} from 'redux-thunk';
 import {composeWithDevTools} from "redux-devtools-extension";
-import {AddToAction,RemoveTodoAction} from "./actions";
-                         
+import TodoReducer from "./reducers";
 const reducer=combineReducers({
-   Todo:AddToAction,  
+   Todo:TodoReducer,  
     
 })
 
