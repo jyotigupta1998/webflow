@@ -8,18 +8,16 @@ import './App.css';
 function App() {
   const dispatch= useDispatch();
   const [todo, setTodo] = useState();
-  const Todo= useSelector((state)=>state.Todo);
+  const Todo = useSelector((state)=>state.Todo);
 
   const {todos}=Todo;
 
 const handleSubmit=(e)=>{
  e.preventDefault(e);
- console.log("67")
  dispatch(AddToAction(todo))
 }
 
 const removeHandler=(e)=>{
-  console.log("76",e)
   dispatch(RemoveTodoAction(e))
 }
 console.log(todos)

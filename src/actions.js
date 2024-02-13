@@ -15,15 +15,18 @@ export const AddToAction = (todo) => (dispatch, getState) => {
 };
 
 export const RemoveTodoAction = (todo) => (dispatch, getState) => {
+
   const {
     Todo: { todos },
   } = getState();
 
   const hasTodo = todos.find((i) => i == todo);
-  if (!hasTodo && todo !== "") {
+
+  if (hasTodo && todo !== "") {
+    const newTodo= 
     dispatch({
       type: "REMOVE_TODO",
-      payload: todos.filter((t) => t!== todo),
+      payload:todos.filter((t) => t!== todo)
     });
   }
 };
