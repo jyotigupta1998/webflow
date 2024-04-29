@@ -45,57 +45,84 @@
 
 // export default App;
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { add_Cart, remove_Cart } from "./redux/action";
+import { product_List } from "./redux/Product/productaction";
+import { Button, Card, Pagination } from "antd";
 
 const App = () => {
   const results = useSelector((state) => state.cart);
-  // console.log(results);
-  const dispatch = useDispatch();
+  const product = useSelector((state) => state.product.products) || [];
 
-  console.log(results, "red");
+  const dispatch = useDispatch();
+  const pageSize = 4;
+
+  let [showProduct, setShowProduct] = useState({ product: 0, cart: 0 });
+  const onShowSizeChange = (page, type) => {
+    type === 1
+      ? setShowProduct({ ...showProduct, product: pageSize * (page - 1) })
+      : setShowProduct({ ...showProduct, cart: pageSize * (page - 1) });
+  };
+
+  useEffect(() => {
+    dispatch(product_List());
+  }, [dispatch]);
+
+  
   return (
-    <div style={{ padding: 0, margin: 0, minHeight: "100vh" }}>
-      <div
-        className="header"
-        style={{
-          width: "100%",
-          height: "20%",
-          background: "grey",
-          color: "white",
-        }}
-      >
-        <ul
-          style={{
-            listStyleType: "none",
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <li>Menu</li>
-          <li>About</li>
-          <li>Wishlist</li>
-          <li>
-            <button
-              onClick={() =>
-                dispatch(add_Cart({ id: new Date().getTime(), item: "nachos" }))
-              }
-            >
-              Cart
-            </button>
-          </li>
-        </ul>
-      </div>
-      <div className="continer">
+    <div style={{ padding: 0, margin: 0, minHeight: "100vh", display:"flex" }}>
+        <div className="continer">
+        <h1>Product list</h1>
         <ul>
-          {results.map((i, j) => {
-           return <li key={i.id}>{i.item + i.id} <button  onClick={() =>
-            dispatch(remove_Cart(i.id))
-          }>remove</button></li>;
-          })}
+          {product
+            .slice(showProduct?.product, showProduct?.product + 4)
+            .map((i, j) => {
+              return (
+                <Card key={i.id}>
+                  <h4> Name: {i.title}</h4>
+                  <h4>Price: {i.price}</h4>
+                  <Button onClick={() => dispatch(add_Cart(i))}>
+                    Add
+                  </Button>{" "}
+                </Card>
+              );
+            })}
         </ul>
+        <Pagination
+          // showSizeChanger
+          onChange={(page) => onShowSizeChange(page, 1)}
+          defaultCurrent={1}
+          pageSize={4}
+          total={product.length}
+        />
       </div>
+    
+      <div className="continer">
+        <h1>cart list</h1>
+        <ul>
+          {results
+            .slice(showProduct?.cart, showProduct?.cart + 4)
+            .map((i, j) => {
+              console.log(i);
+              return (
+                <Card key={i.id}>
+                  <h4> Name: {i.title}</h4>
+                  <h4>Price: {i.price}</h4>
+                  <h4>Quantity: {i.ProductQuantity}</h4>
+                </Card>
+              );
+            })}
+        </ul>
+        <Pagination
+          onChange={(page) => onShowSizeChange(page, 2)}
+          defaultCurrent={1}
+          pageSize={4}
+          total={results.length}
+        />
+      </div>
+
+  
     </div>
   );
 };

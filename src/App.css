@@ -1,0 +1,18 @@
+/* .body{
+    margin: 0;
+    padding: 0;
+    box-sizing: 0;
+} */
+
+.main_div_postion{
+    display: flex;
+    flex-direction: column;
+}
+.postion{
+    padding: 5rem;
+    margin-top: 10rem;
+    margin-bottom: 10rem;
+    display: flex;
+    justify-content: center;
+   
+}
